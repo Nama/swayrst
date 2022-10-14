@@ -18,7 +18,7 @@ if sh:
         dunstify = None
         notifysend = sh.Command('notify-send')
 
-PATH = os.path.expanduser('~/.config/i3/workspace_')
+PATH = os.path.expanduser('~/.config/sway/workspace_')
 workspace_mapping = None
 appname = sys.argv[0]
 
