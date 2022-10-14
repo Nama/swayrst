@@ -21,7 +21,17 @@ else:
     dunstify = None
     notifysend = None
 
-PATH = os.path.expanduser('~/.config/sway/workspace_')
+if os.path.isdir(os.path.expanduser('~/.sway/config')):
+    PATH = os.path.expanduser('~/.sway/config/workspace_')
+elif os.path.isdir(os.path.expanduser('~/.config/sway')):
+    PATH = os.path.expanduser('~/.config/sway/workspace_')
+elif os.path.isdir(os.path.expanduser('~/.i3/config')):
+    PATH = os.path.expanduser('~/.i3/config/workspace_')
+elif os.path.isdir(os.path.expanduser('~/.config/i3')):
+    PATH = os.path.expanduser('~/.config/i3/workspace_')
+else:
+    PATH = None
+
 workspace_mapping = None
 appname = sys.argv[0]
 
