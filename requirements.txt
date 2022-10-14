@@ -1,0 +1,2 @@
+sh
+git+https://github.com/altdesktop/i3ipc-python.git

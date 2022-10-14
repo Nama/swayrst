@@ -9,7 +9,7 @@ from time import sleep
 
 try:
     import sh
-except ImportError:
+except ModuleNotFoundError:
     sh = None
 if sh:
     try:
@@ -17,6 +17,9 @@ if sh:
     except ImportError:
         dunstify = None
         notifysend = sh.Command('notify-send')
+else:
+    dunstify = None
+    notifysend = None
 
 PATH = os.path.expanduser('~/.config/i3/workspace_')
 workspace_mapping = None
@@ -33,7 +36,7 @@ except IndexError:
 def notify(headline, text):
     if dunstify:
         dunstify(f'--appname={appname}', headline, text)
-    else:
+    elif notifysend:
         notifysend(headline, text)
 
 
