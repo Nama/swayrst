@@ -21,14 +21,15 @@ else:
     dunstify = None
     notifysend = None
 
-if os.path.isdir(os.path.expanduser('~/.sway/config')):
-    PATH = os.path.expanduser('~/.sway/config/workspace_')
-elif os.path.isdir(os.path.expanduser('~/.config/sway')):
-    PATH = os.path.expanduser('~/.config/sway/workspace_')
-elif os.path.isdir(os.path.expanduser('~/.i3/config')):
-    PATH = os.path.expanduser('~/.i3/config/workspace_')
-elif os.path.isdir(os.path.expanduser('~/.config/i3')):
-    PATH = os.path.expanduser('~/.config/i3/workspace_')
+home_folder = os.path.expanduser('~')
+if os.path.isdir(home_folder + '/.sway/config'):
+    PATH = home_folder + '/.sway/config/workspace_'
+elif os.path.isdir(home_folder + '/.config/sway'):
+    PATH = home_folder + '/.config/sway/workspace_'
+elif os.path.isdir(home_folder + '/.i3/config'):
+    PATH = home_folder + '/.i3/config/workspace_'
+elif os.path.isdir(home_folder + '/.config/i3'):
+    PATH = home_folder + '/.config/i3/workspace_'
 else:
     PATH = None
 
