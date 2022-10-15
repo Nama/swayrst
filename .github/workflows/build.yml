@@ -37,7 +37,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Build package
       run: python -m PyInstaller --onefile sway_workspaces.py
-    - name: Upload pytest test results
+    - name: Add artifact
       uses: actions/upload-artifact@v3
       with:
           name: sway-workspaces

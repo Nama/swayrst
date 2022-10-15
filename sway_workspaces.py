@@ -21,17 +21,22 @@ else:
     dunstify = None
     notifysend = None
 
+PATH = None
 home_folder = os.path.expanduser('~')
-if os.path.isdir(home_folder + '/.sway/config'):
-    PATH = home_folder + '/.sway/config/workspace_'
-elif os.path.isdir(home_folder + '/.config/sway'):
-    PATH = home_folder + '/.config/sway/workspace_'
-elif os.path.isdir(home_folder + '/.i3/config'):
-    PATH = home_folder + '/.i3/config/workspace_'
-elif os.path.isdir(home_folder + '/.config/i3'):
-    PATH = home_folder + '/.config/i3/workspace_'
-else:
-    PATH = None
+try:
+    config_folder = os.environ['XDG_CONFIG_HOME']
+except KeyError:
+    config_folder = home_folder + '/.config/'
+paths = [
+    home_folder + '.sway/',
+    config_folder + 'sway/',
+    home_folder + '.i3/',
+    config_folder + 'i3/'
+]
+for path in paths:
+    if os.path.isdir(path):
+        PATH = path + 'workspace_'
+        break
 
 workspace_mapping = None
 appname = sys.argv[0]
@@ -67,6 +72,11 @@ if __name__ == '__main__':
         notify('Not enough parameters!', 'Exiting')
         print(f'Usage: {sys.argv[0]} <load|save> <profilename>')
         sys.exit(1)
+    elif not PATH:
+        notify('Sway config not found!', 'Make sure to use a default config path (man sway)')
+        print(f'Sway config not found! Make sure to use a default config path (man sway)')
+        sys.exit(1)
+
     i3 = i3ipc.Connection()
     tree = i3.get_tree()
     if command == 'save':
