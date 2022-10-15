@@ -137,7 +137,7 @@ if __name__ == '__main__':
                     else:
                         o = 'v'
                     tree_app.command(f'split {o}')
-                    tree_app.command(f'move container to workspace {ws_name}')
+                    tree_app.command(f'move --no-auto-back-and-forth container to workspace {ws_name}')
 
         # Move workspaces to outputs
         for workspace in workspace_mapping:
