@@ -166,6 +166,8 @@ if __name__ == '__main__':
                     if not tree_app:
                         couldnt_find.append(app)
                         continue
+                    elif tree_app.workspace().name == ws_name:
+                        continue
                     touch_app(tree_app)
                     if ws_orientiation == 'horizontal':
                         o = 'h'
