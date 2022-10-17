@@ -1,6 +1,5 @@
 # sway-workspaces
 Restore workspaces in sway to displays and move applications to saved workspaces.  
-Multiple windows of an application/class aren't handled. No idea how to do so.
 
 ## Setup
 1. Setup displays, e.g. with `wdisplay`
