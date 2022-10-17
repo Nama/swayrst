@@ -6,6 +6,7 @@ import json
 import i3ipc
 import pickle
 from time import sleep
+from difflib import SequenceMatcher
 
 try:
     import sh
@@ -38,15 +39,14 @@ for path in paths:
         PATH = path + 'workspace_'
         break
 
-workspace_mapping = None
 appname = sys.argv[0]
+workspace_mapping = None
+debug = False
+defaulted = []
+couldnt_find = []
+touched = []
 
 sleep(2)
-
-try:
-    command = sys.argv[1]
-except IndexError:
-    command = None
 
 
 def notify(headline, text):
@@ -62,7 +62,49 @@ def node_getter(nodes):
     return node_getter(nodes['nodes'][0])
 
 
+def similar(a, b):
+    return SequenceMatcher(None, a, b).ratio()
+
+
+def have_touched(tree_app):
+    return tree_app in touched
+
+
+def touch_app(tree_app):
+    if not have_touched(tree_app):
+        touched.append(tree_app)
+
+
+def get_app(tree, app):
+    if app.get('app_id'):
+        # wayland
+        app_class = app['app_id']
+    elif app.get('window'):
+        # xwayland
+        app_class = app.get('window_properties').get('class')
+    else:
+        return None
+    found_apps = tree.find_classed(app_class)
+    found_apps = [tree_app for tree_app in found_apps if not have_touched(tree_app)]
+    if len(found_apps) == 0:
+        return None
+    elif len(found_apps) == 1:
+        return found_apps[0]
+    name = app.get('name')
+    for tree_app in found_apps:
+        if tree_app.name == name:
+            return tree_app
+    found_apps.sort(key=lambda tree_app: similar(tree_app.name, name))
+    tree_app = found_apps[-1]
+    defaulted.append(tree_app)
+    return tree_app
+
+
 if __name__ == '__main__':
+    try:
+        command = sys.argv[1]
+    except IndexError:
+        command = None
     try:
         profile = sys.argv[2]
     except IndexError:
@@ -120,18 +162,13 @@ if __name__ == '__main__':
                     continue
                 apps = node_getter(ws)  # in case of nested workspace, can happen indefinitely
                 for app in apps['nodes']:
-                    if app['app_id']:
-                        # wayland
-                        app_class = app['app_id']
-                    elif app['window']:
-                        # xwayland
-                        app_class = app['window_properties']['class']
-                    found_apps = tree.find_classed(app_class)
-                    if len(found_apps) == 0:
-                        # no window of this application
-                        # shouldn't happen anymore
+                    tree_app = get_app(tree, app)
+                    if not tree_app:
+                        couldnt_find.append(app)
                         continue
-                    tree_app = found_apps[0]
+                    elif tree_app.workspace().name == ws_name:
+                        continue
+                    touch_app(tree_app)
                     if ws_orientiation == 'horizontal':
                         o = 'h'
                     else:
@@ -146,3 +183,14 @@ if __name__ == '__main__':
         for workspace in filter(lambda w: w.visible, workspace_mapping):
             i3.command(f'workspace {workspace.name}')
         notify('Loaded Workspace Setup', profile)
+
+        if not debug:
+            sys.exit(0)
+        if len(defaulted) != 0:
+            print(f'chose {len(defaulted)} heuristically')
+        total = len(tree.leaves())
+        num_touched = len(touched)
+        if num_touched != total:
+            print(f'left {total - num_touched} untouched')
+        if len(couldnt_find) != 0:
+            print(f'couldn\'t find {len(couldnt_find)}')
