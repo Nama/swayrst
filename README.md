@@ -13,8 +13,9 @@ Restore workspaces in sway to displays and move applications to their workspaces
 * The `nodes` list is used. All workspaces are in outputs (displays)
   * Windows are in a list in workspaces
 * Windows can be nested indefinitely, so `node_getter()` is used
-  * This can happen if the user changes the layout of single windows, hence creats a new container
+  * This can happen if the user changes the layout of single windows, hence creates a new container
 * Workspace to output mapping are saved seperately from the sway tree json
+* We get the information about which window is in which workspace from the tree: `i3.get_tree()`, `swaymsg -t get_tree`
 
 ### Notes
 Had to alter the default tree, so the outputs are not the ports (display name instead of DP-1).
