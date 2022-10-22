@@ -3,6 +3,8 @@ Restore workspaces in sway to displays and move applications to their workspaces
 
 ## Setup
 1. Setup displays, e.g. with `wdisplay`
+1. Download from [Actions](https://github.com/Nama/sway-workspaces/actions) or [Releases](https://github.com/Nama/sway-workspaces/releases)
+1. `unzip` and `chmod +x` the file
 1. Run after setting up your displays `./sway_workspaces save <profilename>`
 1. Repeat for every display setup
 1. Setup kanshi and make it run `sway_workspaces load <profilename>`
