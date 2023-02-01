@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='sway-workspaces',
     version='0.1',
-    packages=['sway-workspaces'],
+    scripts=["sway-workspaces"],
     url='https://github.com/Nama/sway-workspaces',
     license='MIT',
     author='Yama',
