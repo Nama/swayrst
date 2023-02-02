@@ -1,4 +1,4 @@
-# sway-workspaces
+# sway_workspaces
 Restore workspaces in sway to displays and move applications to their workspaces.  
 
 ## Setup
@@ -7,7 +7,9 @@ Restore workspaces in sway to displays and move applications to their workspaces
 1. `unzip` and `chmod +x` the file
 1. Run after setting up your displays `./sway_workspaces save <profilename>`
 1. Repeat for every display setup
-1. Setup kanshi and make it run `sway_workspaces load <profilename>`
+1. Run `./sway_workspaces load <profilename>` to restore windows into workspaces
+1. Make kanshi run this command for more automation
+
 
 ## Development
 ### Used objects in tree
@@ -18,6 +20,9 @@ Restore workspaces in sway to displays and move applications to their workspaces
   * This can happen if the user changes the layout of single windows, hence creates a new container
 * Workspace to output mapping are saved seperately from the sway tree json
 * We get the information about which window is in which workspace from the tree: `i3.get_tree()`, `swaymsg -t get_tree`
+* There is no known way (to me) to identify the exact same windows after a reboot (to move multiple windows of the same tool)
+  * `window` is only set for Xwayland windows - and is reset after a reboot
+  * node IDs reset after a reboot
 
 ### Notes
 Had to alter the default tree, so the outputs are not the ports (display name instead of DP-1).
