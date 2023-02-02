@@ -1,9 +1,10 @@
 from setuptools import setup
 
 setup(
-    name='sway-workspaces',
+    name='sway_workspaces',
     version='0.1',
-    packages=['sway-workspaces'],
+    packages=['sway_workspaces'],
+    scripts=['sway_workspaces'],
     url='https://github.com/Nama/sway-workspaces',
     license='MIT',
     author='Yama',
