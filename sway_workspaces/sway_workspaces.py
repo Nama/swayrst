@@ -93,6 +93,7 @@ def get_app(tree, app):
     name = app.get('name')
     for tree_app in found_apps:
         if tree_app.name == name:
+            touch_app(tree_app)
             return tree_app
     found_apps.sort(key=lambda tree_app: similar(tree_app.name, name))
     tree_app = found_apps[-1]
@@ -168,7 +169,6 @@ if __name__ == '__main__':
                         continue
                     elif tree_app.workspace().name == ws_name:
                         continue
-                    touch_app(tree_app)
                     if ws_orientiation == 'horizontal':
                         o = 'h'
                     else:
