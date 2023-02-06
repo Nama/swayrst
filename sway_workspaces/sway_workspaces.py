@@ -57,9 +57,15 @@ def notify(headline, text):
 
 
 def node_getter(nodes):
-    if 'app_id' in nodes['nodes'][0].keys():
-        return nodes
-    return node_getter(nodes['nodes'][0])
+    apps = []
+    for node in nodes['nodes']:
+        if 'app_id' in node.keys():
+            apps.append(node)
+        else:
+            gets = node_getter(node)
+            for app in gets:
+                apps.append(app)
+    return apps
 
 
 def similar(a, b):
@@ -166,7 +172,7 @@ if __name__ == '__main__':
                 if len(ws['nodes']) == 0:  # empty workspace
                     continue
                 apps = node_getter(ws)  # in case of nested workspace, can happen indefinitely
-                for app in apps['nodes']:
+                for app in apps:
                     tree_app = get_app(tree, app)
                     if not tree_app:
                         couldnt_find.append(app)
