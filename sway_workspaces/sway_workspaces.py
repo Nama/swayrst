@@ -94,10 +94,14 @@ def get_app(tree, app):
     for tree_app in found_apps:
         if tree_app.name == name:
             touch_app(tree_app)
+            if debug:
+                print(f'Exact title match: {name}')
             return tree_app
     found_apps.sort(key=lambda tree_app: similar(tree_app.name, name))
     tree_app = found_apps[-1]
     defaulted.append(tree_app)
+    if debug:
+        print(f'Similar title: {name}')
     return tree_app
 
 
@@ -166,8 +170,12 @@ if __name__ == '__main__':
                     tree_app = get_app(tree, app)
                     if not tree_app:
                         couldnt_find.append(app)
+                        if debug:
+                            print(f'Couldn\'t find: {app.get("name")}')
                         continue
                     elif tree_app.workspace().name == ws_name:
+                        if debug:
+                            print(f'Window {app.get("name")} already in correct workspace {ws_name}')
                         continue
                     if ws_orientiation == 'horizontal':
                         o = 'h'
@@ -175,6 +183,8 @@ if __name__ == '__main__':
                         o = 'v'
                     tree_app.command(f'split {o}')
                     tree_app.command(f'move --no-auto-back-and-forth container to workspace {ws_name}')
+                    if debug:
+                        print(f'Moved {tree_app.name} to {ws_name}')
 
         # Move workspaces to outputs
         for workspace in workspace_mapping:
@@ -187,10 +197,19 @@ if __name__ == '__main__':
         if not debug:
             sys.exit(0)
         if len(defaulted) != 0:
-            print(f'chose {len(defaulted)} heuristically')
+            print(f'Chose {len(defaulted)} heuristically:')
+            for window in defaulted:
+                print(window.app_id, window.name)
         total = len(tree.leaves())
         num_touched = len(touched)
         if num_touched != total:
-            print(f'left {total - num_touched} untouched')
+            print(f'Total windows: {total}')
+            print(f'Left {total - num_touched} untouched')
+            print(f'Touched: {num_touched}:')
+            for window in touched:
+                print(window.app_id, window.name)
         if len(couldnt_find) != 0:
-            print(f'couldn\'t find {len(couldnt_find)}')
+            print(f'Couldn\'t find {len(couldnt_find)}:')
+            for nodes in couldnt_find:
+                for node in nodes['nodes']:
+                    print(node['name'])
