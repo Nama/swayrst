@@ -23,11 +23,11 @@ else:
     notifysend = None
 
 PATH = None
-home_folder = os.path.expanduser('~')
+home_folder = os.path.expanduser('~') + '/'
 try:
-    config_folder = os.environ['XDG_CONFIG_HOME']
+    config_folder = os.environ['XDG_CONFIG_HOME'] + '/'
 except KeyError:
-    config_folder = home_folder + '/.config/'
+    config_folder = home_folder + '.config/'
 paths = [
     home_folder + '.sway/',
     config_folder + 'sway/',
