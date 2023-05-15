@@ -8,7 +8,7 @@ Restore workspaces in sway to displays and move applications to their workspaces
 1. Run after setting up your displays `./sway_workspaces save <profilename>`
 1. Repeat for every display setup
 1. Run `./sway_workspaces load <profilename>` to restore windows into workspaces
-1. Make kanshi run this command for more automation
+1. Make [kanshi](https://sr.ht/~emersion/kanshi/) run this command for more automation
 
 
 ## Development
