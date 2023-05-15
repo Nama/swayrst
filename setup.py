@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='sway_workspaces',
-    version='1.0',
+    version='1.1',
     packages=['sway_workspaces'],
     scripts=['sway_workspaces/sway_workspaces.py'],
     url='https://github.com/Nama/sway-workspaces',
