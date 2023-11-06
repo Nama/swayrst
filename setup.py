@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(
-    name='sway_workspaces',
+    name='swayrst',
     version='1.1',
-    packages=['sway_workspaces'],
-    scripts=['sway_workspaces/sway_workspaces.py'],
-    url='https://github.com/Nama/sway-workspaces',
+    packages=['swayrst'],
+    scripts=['swayrst/swayrst.py'],
+    url='https://github.com/Nama/swayrst',
     license='MIT',
     author='Yama',
     author_email='',

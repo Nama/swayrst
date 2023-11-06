@@ -1,4 +1,4 @@
-Please follow these things, so your code can be merged seemlessly.
+Please follow these things, so your code can be merged seamlessly.
 
 1. Use 4 spaces for indentation
 2. Use ' instead of " for strings
