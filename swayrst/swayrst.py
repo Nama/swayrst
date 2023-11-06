@@ -111,7 +111,7 @@ def get_app(tree, app):
     return tree_app
 
 
-if __name__ == '__main__':
+def main():
     try:
         command = sys.argv[1]
     except IndexError:
@@ -219,3 +219,7 @@ if __name__ == '__main__':
             for nodes in couldnt_find:
                 for node in nodes['nodes']:
                     print(node['name'])
+
+
+if __name__ == '__main__':
+    main()
