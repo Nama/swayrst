@@ -168,7 +168,7 @@ if __name__ == '__main__':
                 continue
             for ws in output['nodes']:
                 ws_name = ws['name']
-                ws_orientiation = ws['orientation']
+                ws_orientation = ws['orientation']
                 if len(ws['nodes']) == 0:  # empty workspace
                     continue
                 apps = node_getter(ws)  # in case of nested workspace, can happen indefinitely
@@ -183,7 +183,7 @@ if __name__ == '__main__':
                         if debug:
                             print(f'Window {app.get("name")} already in correct workspace {ws_name}')
                         continue
-                    if ws_orientiation == 'horizontal':
+                    if ws_orientation == 'horizontal':
                         o = 'h'
                     else:
                         o = 'v'
