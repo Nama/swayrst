@@ -9,5 +9,10 @@ setup(
     license='MIT',
     author='Yama',
     author_email='',
-    description='Restore workspaces in sway to displays and move applications to saved workspaces.'
+    description='Restore workspaces in sway to displays and move applications to saved workspaces.',
+    entry_points={
+        'console_scripts': [
+            'swayrst = swayrst:main',
+        ]
+    }
 )
