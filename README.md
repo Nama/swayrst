@@ -5,9 +5,9 @@ Restore workspaces in sway to displays and move applications to their workspaces
 ## Setup
 1. Setup displays, e.g. with `wdisplay`
 1. Download
-   1. Either from [AUR](https://aur.archlinux.org/packages/swayrst-git) with `yay -S swayrst-git`
-   1. Or download from [Actions](https://github.com/Nama/sway-workspaces/actions) or [Releases](https://github.com/Nama/sway-workspaces/releases)
-      1. `unzip` and `chmod +x` the file
+   * Either from [AUR](https://aur.archlinux.org/packages/swayrst-git) with `yay -S swayrst-git`
+   * Or download from [Actions](https://github.com/Nama/sway-workspaces/actions) or [Releases](https://github.com/Nama/sway-workspaces/releases)
+     * `unzip` and `chmod +x` the file
 1. Run after setting up your displays `swayrst save <profilename>`
 1. Repeat for every display setup
 1. Run `swayrst load <profilename>` to restore windows into workspaces
