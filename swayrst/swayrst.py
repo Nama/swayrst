@@ -49,6 +49,8 @@ for path in paths:
 appname = sys.argv[0]
 workspace_mapping = None
 debug = parser.parse_args().v
+command = parser.parse_args().command
+profile = parser.parse_args().profile
 defaulted = []
 couldnt_find = []
 touched = []
@@ -119,20 +121,7 @@ def get_app(tree, app):
 
 
 def main():
-    try:
-        command = parser.parse_args().command
-    except IndexError:
-        command = None
-    try:
-        profile = parser.parse_args().profile
-    except IndexError:
-        profile = None
-
-    if not command or not profile:
-        notify('Not enough parameters!', 'Exiting')
-        print(f'Usage: {sys.argv[0]} <load|save> <profilename>')
-        sys.exit(1)
-    elif not PATH:
+    if not PATH:
         notify('Sway config not found!', 'Make sure to use a default config path (man sway)')
         print(f'Sway config not found! Make sure to use a default config path (man sway)')
         sys.exit(1)
