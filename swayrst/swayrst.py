@@ -11,6 +11,8 @@ from difflib import SequenceMatcher
 
 
 parser = argparse.ArgumentParser(description='Restore workspaces in sway to displays and move applications to saved workspaces ')
+parser.add_argument('command', choices=['save', 'load'])
+parser.add_argument('profile')
 parser.add_argument('-v', action='store_true')
 
 try:
@@ -118,11 +120,11 @@ def get_app(tree, app):
 
 def main():
     try:
-        command = sys.argv[1]
+        command = parser.parse_args().command
     except IndexError:
         command = None
     try:
-        profile = sys.argv[2]
+        profile = parser.parse_args().profile
     except IndexError:
         profile = None
 
@@ -142,7 +144,6 @@ def main():
         tree_file = open(f'{PATH}{profile}_tree.json', 'w')
         json.dump(tree.ipc_data, tree_file, indent=4)
         # save workspaces
-        profile = sys.argv[2]
         workspaces = i3.get_workspaces()
         outputs = i3.get_outputs()
         for i, ws in enumerate(workspaces):
