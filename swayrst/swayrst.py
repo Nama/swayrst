@@ -5,13 +5,8 @@ import sys
 import json
 import i3ipc
 import pickle
-import argparse
 from time import sleep
 from difflib import SequenceMatcher
-
-
-parser = argparse.ArgumentParser(description='Restore workspaces in sway to displays and move applications to saved workspaces ')
-parser.add_argument('-v', action='store_true')
 
 try:
     import sh
@@ -46,7 +41,7 @@ for path in paths:
 
 appname = sys.argv[0]
 workspace_mapping = None
-debug = parser.parse_args().v
+debug = False
 defaulted = []
 couldnt_find = []
 touched = []
