@@ -128,13 +128,13 @@ def main():
 
     i3 = i3ipc.Connection()
     tree = i3.get_tree()
+    outputs = i3.get_outputs()
     if command == 'save':
         # save current tree
         tree_file = open(f'{PATH}{profile}_tree.json', 'w')
         json.dump(tree.ipc_data, tree_file, indent=4)
         # save workspaces
         workspaces = i3.get_workspaces()
-        outputs = i3.get_outputs()
         for i, ws in enumerate(workspaces):
             for output in outputs:
                 if output.name == ws.output:
@@ -155,6 +155,11 @@ def main():
             notify('Can\'t find this mapping', profile)
             sys.exit(1)
 
+        # Save focused workspaces to focus them again once we are done
+        # Might be annoying for the first run after boot, we'll see
+        active_workspaces = []
+        for output in outputs:
+            active_workspaces.append(output.current_workspace)
         # Move applications to the workspaces
         tree_file = open(f'{PATH}{profile}_tree.json')
         tree_loaded = json.load(tree_file)
@@ -193,6 +198,8 @@ def main():
             i3.command(f'move workspace to output "{workspace.output}"')
         for workspace in filter(lambda w: w.visible, workspace_mapping):
             i3.command(f'workspace {workspace.name}')
+        for workspace in active_workspaces:
+            i3.command(f'workspace {workspace}')
         notify('Loaded Workspace Setup', profile)
 
         if not debug:
