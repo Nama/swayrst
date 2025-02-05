@@ -159,7 +159,8 @@ def main():
         # Might be annoying for the first run after boot, we'll see
         active_workspaces = []
         for output in outputs:
-            active_workspaces.append(output.current_workspace)
+            if output.current_workspace:
+                active_workspaces.append(output.current_workspace)
         # Move applications to the workspaces
         tree_file = open(f'{PATH}{profile}_tree.json')
         tree_loaded = json.load(tree_file)
@@ -199,6 +200,8 @@ def main():
         for workspace in filter(lambda w: w.visible, workspace_mapping):
             i3.command(f'workspace {workspace.name}')
         for workspace in active_workspaces:
+            if debug:
+                print(f'active workspace: {workspace}')
             i3.command(f'workspace {workspace}')
         notify('Loaded Workspace Setup', profile)
 
