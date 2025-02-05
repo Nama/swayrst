@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='swayrst',
-    version='1.1',
+    version='1.3',
     packages=['swayrst'],
     scripts=['swayrst/swayrst.py'],
     url='https://github.com/Nama/swayrst',
